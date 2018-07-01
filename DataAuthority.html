@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    div,li,span{
+        cursor:pointer;
+    }
+        li{
+            list-style-type: none;
+        }
+        #hospitalAuthority,#departmentAuthority,#customAuthority{
+            display: none;
+            width:300px;
+            height:200px;
+
+            margin:22px 0 0 15px;
+        }
+       .hospitalAuthority1{
+            border: 1px solid #666;
+            width:300px;
+            height:160px;
+            overflow: auto;
+        }
+        .changeColor{
+            font-size: 14px
+        }
+        .nav-active{
+            background: #79c4ff;
+        }
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+</head>
+<body>
+<ul>
+    <div id="ul1">
+    <li><input type="radio" name="wjj" value="省级卫生局">省级卫生局</li>
+    <li><input type="radio" name="wjj" value="市级卫计局">市级卫计局</li>
+    <li><input type="radio" name="wjj" value="区县级卫生局">区县级卫生局</li>
+    <li><input type="radio" name="wjj"value="乡镇级卫生局">乡镇级卫生局</li>
+    </div>
+    <span><input class="check" id="hospital" type="radio" name="wjj" value="医院级数据权限">医院级数据权限</span><br>
+    <span><input class="check" id="department" type="radio" name="wjj"value="科室级数据权限">科室级数据权限</span><br>
+    <span><input class="check" id="custom" type="radio" name="wjj"value="自定义数据权限">自定义数据权限</span><br>
+    <div class="sondiv" id="hospitalAuthority">
+        <div class="hospitalAuthority1 hospitalAuthority2">
+        <div class="changeColor"><span>长沙市中心医院</span></div>
+        <div class="changeColor"><span>邵阳市中心医院</span></div>
+        <div class="changeColor"><span>湖南湘雅医院</span></div>
+        <div class="changeColor"><span>长沙市中心医院</span></div>
+        </div>
+        <button style=" margin-top:10px;border-radius: 5px; float: right; width:80px;height:40px;color:white;border:none;background: deepskyblue;letter-spacing: 5px;">保存</button>
+    </div>
+    <div class="sondiv" id="departmentAuthority">
+        <select style="width: 100%;height:25px; background: transparent;">
+            <option>长沙中心医院</option>
+            <option>湖南湘雅医院</option>
+            <option>邵阳中心医院</option>
+        </select>
+        <div class="hospitalAuthority1" >
+            <div class="changeColor"><span>放射科</span></div>
+            <div class="changeColor"><span>心电科</span></div>
+            <div class="changeColor"><span>泌尿科</span></div>
+            <div class="changeColor"><span>儿科</span></div>
+        </div>
+        <button style=" margin-top:10px;border-radius: 5px; float: right; width:80px;height:40px;color:white;border:none;background: deepskyblue;letter-spacing: 5px;">保存</button>
+    </div>
+    <div class="sondiv" id="customAuthority">
+        <span>SQL语句 :</span>
+        <textarea class="hospitalAuthority1">
+        </textarea>
+        <button style=" margin-top:10px;border-radius: 5px; float: right; width:80px;height:40px;color:white;border:none;background: deepskyblue;letter-spacing: 5px;">保存</button>
+    </div>
+</ul>
+
+
+<script>
+    $(function () {
+        $(".changeColor").click(function () {
+            $(this).addClass("nav-active").siblings().removeClass("nav-active");
+        });
+    });
+    function foo() {
+        var hos = document.getElementById('hospital');
+        var hosHA = document.getElementById('hospitalAuthority');
+        var dep = document.getElementById('department');
+        var depHA = document.getElementById('departmentAuthority');
+        var cus = document.getElementById('custom');
+        var cusHA = document.getElementById('customAuthority');
+        var Oul = document.getElementById("ul1");
+        var Ocheck = document.getElementsByClassName("check"); 
+        var Ospans = document.getElementsByTagName("span");
+
+        Oul.onclick = function (ev) {
+            var ev = ev || window.event;  //兼容ie和非ie
+            var target = ev.target || ev.srcElement; //ie和非ie事件对象
+            if (target.nodeName.toLowerCase() == 'li' || target.nodeName.toLowerCase() == 'input') {
+                switch (target.innerText) {
+                    case '省级卫生局':
+                        document.getElementsByTagName("input")[0].checked = "checked";
+                        break;
+                    case '市级卫计局':
+                        document.getElementsByTagName("input")[1].checked = "checked";
+                        break;
+                    case '区县级卫生局':
+                        document.getElementsByTagName("input")[2].checked = "checked";
+                        break;
+                    case '乡镇级卫生局':
+                        document.getElementsByTagName("input")[3].checked = "checked";
+                        break;
+                    default:
+                }
+                depHA.style.display = "none";
+                hosHA.style.display = "none";
+                cusHA.style.display = "none";
+            }
+        };
+
+        hos.onchange = function () {
+            hosHA.style.display = "block";
+            depHA.style.display = "none";
+            cusHA.style.display = "none";
+        };
+        dep.onchange = function () {
+            depHA.style.display = "block";
+            hosHA.style.display = "none";
+            cusHA.style.display = "none";
+        };
+        cus.onchange = function () {
+            cusHA.style.display = "block";
+            hosHA.style.display = "none";
+            depHA.style.display = "none";
+        };
+        Ospans[0].onclick = function () {
+            Ocheck[0].checked = "checked";
+            hos.onchange();
+        }
+        Ospans[1].onclick = function () {
+            Ocheck[1].checked = "checked";
+            dep.onchange();
+        }
+        Ospans[2].onclick = function () {
+            Ocheck[2].checked = "checked";
+            cus.onchange();
+        }
+    }
+    foo();
+</script>
+</body>
+</html>
